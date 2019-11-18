@@ -1,0 +1,37 @@
+@startuml
+object user {
+    id: int
+    firstname: string
+    lastname: string
+    email: string
+    password: string
+}
+object product {
+    id: int
+    price: float
+    name: string
+    description: string
+    uid: string
+}
+object bill {
+    id: int
+    total: float
+    status: boolean
+    created_at: datetime
+}
+object bill_content {
+    id: int
+    product_id: int
+    bill_id: int
+    quantity: int
+}
+object payment {
+    id: int
+    status: string
+    type: string
+}
+bill_content o-- "1..N" bill
+bill_content o-- "1..N" product
+user o-- "1..N" bill
+bill o-- "1..N" payment
+@enduml

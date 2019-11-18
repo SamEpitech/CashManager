@@ -1,0 +1,387 @@
+openapi: 3.0.0
+
+info:
+  title: Cash Manager API
+  description: API documentation for the Cash Manager Epitech project (2019)
+  version: 0.1.0
+servers:
+  - url: 'https://example.com/api'
+    description: Production server
+tags:
+  - name: users
+    description: Operations on users
+  - name: bills
+    description: Operations on bills
+  - name: products
+    description: Operations on products
+    
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: List all users
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        400:
+          description: error
+    post:
+      tags:
+        - users
+      summary: Create user
+      requestBody:
+        description: New user informations
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: error in informations
+    put:
+      tags:
+        - users
+      summary: Update existing user
+      requestBody:
+        description: Informations to update user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        204:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: error in informations
+        404:
+          description: not found
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: Get one user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the queried user
+          schema:
+            type: integer
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: not found
+    delete:
+      tags:
+        - users
+      summary: Delete a user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the user to be deleted
+          schema:
+            type: integer
+      responses:
+        204:
+          description: user deleted
+        400:
+          description: error in informations
+        404:
+          description: not found
+  /users/{id}/bills:
+    get:
+      tags:
+        - bills
+      summary: Get all bills for one user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the user
+          schema:
+            type: integer
+      responses:
+        200:
+          description: user deleted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bill'
+        400:
+          description: error in informations
+        404:
+          description: not found
+    post:
+      tags:
+        - bills
+      summary: Create new bill
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the user
+          schema:
+            type: integer
+      requestBody:
+        description: New bill informations
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+        required: true
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+        400:
+          description: error in informations
+    put:
+      tags:
+        - bills
+      summary: Update bill
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the user
+          schema:
+            type: integer
+      requestBody:
+        description: Bill informations
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+        required: true
+      responses:
+        204:
+          description: updated
+        400:
+          description: error in informations
+        404:
+          description: not found
+  /users/{id}/bills/{id}:
+    get:
+      tags:
+        - bills
+      summary: Get one bill
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the user
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          description: The ID of the bill
+          schema:
+            type: integer
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+        400:
+          description: error
+    delete:
+      tags:
+        - bills
+      summary: delete a bill
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the user
+          schema:
+            type: integer
+        - in: path
+          name: id
+          required: true
+          description: The ID of the bill
+          schema:
+            type: integer
+      responses:
+        204:
+          description: deleted
+        400:
+          description: error in informations
+        404:
+          description: not found
+  /products:
+    get:
+      tags:
+        - products
+      summary: Get all products
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        400:
+          description: error
+    post:
+      tags:
+        - products
+      summary: Create a product
+      requestBody:
+        description: New product informations
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        400:
+          description: error in informations
+    put:
+      tags:
+        - products
+      summary: Update a product
+      requestBody:
+        description: Product informations
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        204:
+          description: updated
+        400:
+          description: error in informations
+        404:
+          description: not found
+  /products/{id}:
+    get:
+      tags:
+        - products
+      summary: Get one product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the product
+          schema:
+            type: integer
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        400:
+          description: error in informations
+    delete:
+      tags:
+        - products
+      summary: Delete a product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the product
+          schema:
+            type: integer
+      responses:
+        204:
+          description: deleted
+        400:
+          description: error in informations
+        404:
+          description: not found
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        bills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bill'
+      xml:
+        name: User
+    Bill:
+      type: object
+      properties:
+        id:
+          type: integer
+        total:
+          type: number
+        status:
+          type: boolean
+        payment_type:
+          type: string
+        created_at:
+          type: datetime
+      xml:
+        name: Bill
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        price:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        uid:
+          type: string
+      xml:
+        name: Product

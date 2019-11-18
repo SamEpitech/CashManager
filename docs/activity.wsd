@@ -1,0 +1,19 @@
+@startuml
+start
+:**Settings**
+login, password, server;
+repeat
+:Add article;
+repeat while (more articles?) is (yes)
+->no;
+:Display total;
+repeat
+    if (payment method?) then
+        :NFC;
+    else
+        :QR Code;
+    endif
+repeat while (accepted?) is (ko)
+->ok;
+stop
+@enduml

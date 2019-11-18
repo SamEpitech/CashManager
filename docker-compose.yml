@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cashmanager
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data/"
+   
+  server:
+    build: cashmanager
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  mobile:
+    build: cashmanager-app
+    command: ./gradlew assemble
+
+volumes:
+  postgres_data:
